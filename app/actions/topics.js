@@ -1,18 +1,18 @@
 /* eslint consistent-return: 0, no-else-return: 0*/
-import md5 from 'spark-md5';
-import * as types from '../types';
-import { voteService } from '../services';
+import md5 from 'spark-md5'
+import * as types from '../types'
+import { voteService } from '../services'
 
 function increment(id) {
-  return { type: types.INCREMENT_COUNT, id };
+  return { type: types.INCREMENT_COUNT, id }
 }
 
 function decrement(id) {
-  return { type: types.DECREMENT_COUNT, id };
+  return { type: types.DECREMENT_COUNT, id }
 }
 
 function destroy(id) {
-  return { type: types.DESTROY_TOPIC, id };
+  return { type: types.DESTROY_TOPIC, id }
 }
 
 function createTopicRequest(data) {
@@ -20,35 +20,35 @@ function createTopicRequest(data) {
     type: types.CREATE_TOPIC_REQUEST,
     id: data.id,
     count: data.count,
-    text: data.text
-  };
+    text: data.text,
+  }
 }
 
 function createTopicSuccess() {
   return {
-    type: types.CREATE_TOPIC_SUCCESS
-  };
+    type: types.CREATE_TOPIC_SUCCESS,
+  }
 }
 
 function createTopicFailure(data) {
   return {
     type: types.CREATE_TOPIC_FAILURE,
     id: data.id,
-    error: data.error
-  };
+    error: data.error,
+  }
 }
 
 function createTopicDuplicate() {
   return {
-    type: types.CREATE_TOPIC_DUPLICATE
-  };
+    type: types.CREATE_TOPIC_DUPLICATE,
+  }
 }
 
 export function typing(text) {
   return {
     type: types.TYPING,
-    newTopic: text
-  };
+    newTopic: text,
+  }
 }
 
 // This action creator returns a function,
@@ -58,17 +58,17 @@ export function typing(text) {
 export function createTopic(text) {
   return (dispatch, getState) => {
     // If the text box is empty
-    if (text.trim().length <= 0) return;
+    if (text.trim().length <= 0) return
 
-    const id = md5.hash(text);
+    const id = md5.hash(text)
     // Redux thunk's middleware receives the store methods `dispatch`
     // and `getState` as parameters
-    const { topic } = getState();
+    const { topic } = getState()
     const data = {
       count: 1,
       id,
-      text
-    };
+      text,
+    }
 
     // Conditional dispatch
     // If the topic already exists, make sure we emit a dispatch event
@@ -76,11 +76,11 @@ export function createTopic(text) {
       // Currently there is no reducer that changes state for this
       // For production you would ideally have a message reducer that
       // notifies the user of a duplicate topic
-      return dispatch(createTopicDuplicate());
+      return dispatch(createTopicDuplicate())
     }
 
     // First dispatch an optimistic update
-    dispatch(createTopicRequest(data));
+    dispatch(createTopicRequest(data))
 
     return voteService().createTopic({ id, data })
       .then((res) => {
@@ -88,14 +88,14 @@ export function createTopic(text) {
           // We can actually dispatch a CREATE_TOPIC_SUCCESS
           // on success, but I've opted to leave that out
           // since we already did an optimistic update
-          // We could return res.json();
-          return dispatch(createTopicSuccess());
+          // We could return res.json()
+          return dispatch(createTopicSuccess())
         }
       })
       .catch(() => {
-        return dispatch(createTopicFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your topic'}));
-      });
-  };
+        return dispatch(createTopicFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your topic' }))
+      })
+  }
 }
 
 export function incrementCount(id) {
@@ -104,12 +104,12 @@ export function incrementCount(id) {
       id,
       data: {
         isFull: false,
-        isIncrement: true
-      }
+        isIncrement: true,
+      },
     })
       .then(() => dispatch(increment(id)))
-      .catch(() => dispatch(createTopicFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
-  };
+      .catch(() => dispatch(createTopicFailure({ id, error: 'Oops! Something went wrong and we couldn\'t add your vote' })))
+  }
 }
 
 export function decrementCount(id) {
@@ -118,19 +118,19 @@ export function decrementCount(id) {
       id,
       data: {
         isFull: false,
-        isIncrement: false
-      }
+        isIncrement: false,
+      },
     })
       .then(() => dispatch(decrement(id)))
-      .catch(() => dispatch(createTopicFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
-  };
+      .catch(() => dispatch(createTopicFailure({ id, error: 'Oops! Something went wrong and we couldn\'t add your vote' })))
+  }
 }
 
 export function destroyTopic(id) {
   return (dispatch) => {
     return voteService().deleteTopic({ id })
       .then(() => dispatch(destroy(id)))
-      .catch(() => dispatch(createTopicFailure({id,
-        error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
-  };
+      .catch(() => dispatch(createTopicFailure({ id,
+        error: 'Oops! Something went wrong and we couldn\'t add your vote' })))
+  }
 }

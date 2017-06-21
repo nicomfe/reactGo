@@ -1,21 +1,21 @@
 /**
  * Routes for express app
  */
-import passport from 'passport';
-import unsupportedMessage from '../db/unsupportedMessage';
-import { controllers, passport as passportConfig } from '../db';
+import passport from 'passport'
+import unsupportedMessage from '../db/unsupportedMessage'
+import { controllers, passport as passportConfig } from '../db'
 
-const usersController = controllers && controllers.users;
-const topicsController = controllers && controllers.topics;
+const usersController = controllers && controllers.users
+const topicsController = controllers && controllers.topics
 
 export default (app) => {
   // user routes
   if (usersController) {
-    app.post('/sessions', usersController.login);
-    app.post('/users', usersController.signUp);
-    app.delete('/sessions', usersController.logout);
+    app.post('/sessions', usersController.login)
+    app.post('/users', usersController.signUp)
+    app.delete('/sessions', usersController.logout)
   } else {
-    console.warn(unsupportedMessage('users routes'));
+    console.warn(unsupportedMessage('users routes'))
   }
 
   if (passportConfig && passportConfig.google) {
@@ -28,9 +28,9 @@ export default (app) => {
     app.get('/auth/google', passport.authenticate('google', {
       scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
-      ]
-    }));
+        'https://www.googleapis.com/auth/userinfo.email',
+      ],
+    }))
 
     // Google will redirect the user to this URL after authentication. Finish the
     // process by verifying the assertion. If valid, the user will be logged in.
@@ -38,9 +38,9 @@ export default (app) => {
     app.get('/auth/google/callback',
       passport.authenticate('google', {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/login',
       })
-    );
+    )
   }
 
   if (passportConfig && passportConfig.twitter) {
@@ -48,7 +48,7 @@ export default (app) => {
     // Redirect the user to Twitter for authentication. When complete, Twitter
     // will redirect the user back to the application at
     // /auth/twitter/return
-    app.get('/auth/twitter', passport.authenticate('twitter'));
+    app.get('/auth/twitter', passport.authenticate('twitter'))
 
     // Google will redirect the user to this URL after authentication. Finish the
     // process by verifying the assertion. If valid, the user will be logged in.
@@ -56,18 +56,18 @@ export default (app) => {
     app.get('/auth/twitter/callback',
       passport.authenticate('twitter', {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/login',
       })
-    );
+    )
   }
 
   // topic routes
   if (topicsController) {
-    app.get('/topic', topicsController.all);
-    app.post('/topic/:id', topicsController.add);
-    app.put('/topic/:id', topicsController.update);
-    app.delete('/topic/:id', topicsController.remove);
+    app.get('/topic', topicsController.all)
+    app.post('/topic/:id', topicsController.add)
+    app.put('/topic/:id', topicsController.update)
+    app.delete('/topic/:id', topicsController.remove)
   } else {
-    console.warn(unsupportedMessage('topics routes'));
+    console.warn(unsupportedMessage('topics routes'))
   }
-};
+}

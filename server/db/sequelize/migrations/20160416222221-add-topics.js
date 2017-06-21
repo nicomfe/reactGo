@@ -4,23 +4,23 @@ module.exports = {
       'Topics', {
         id: {
           type: DataTypes.STRING,
-          primaryKey: true
+          primaryKey: true,
         },
         text: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING,
         },
         count: {
-          type: DataTypes.INTEGER
+          type: DataTypes.INTEGER,
         },
         date: {
           type: DataTypes.DATE,
-          defaultValue: DataTypes.fn('NOW')
-        }
-      }
-    );
+          defaultValue: DataTypes.fn('NOW'),
+        },
+      },
+    )
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Topics');
-  }
-};
+    return queryInterface.dropTable('Topics')
+  },
+}

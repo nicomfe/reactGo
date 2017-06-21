@@ -1,18 +1,18 @@
-import Promise from 'bluebird';
-import bcryptNode from 'bcrypt-nodejs';
+import Promise from 'bluebird'
+import bcryptNode from 'bcrypt-nodejs'
 
-const bcrypt = Promise.promisifyAll(bcryptNode);
+const bcrypt = Promise.promisifyAll(bcryptNode)
 
 // Other oauthtypes to be added
 
 /* eslint-disable no-param-reassign */
 function hashPassword(user) {
-  if (!user.changed('password')) return null;
+  if (!user.changed('password')) return null
   return bcrypt.genSaltAsync(5).then(salt =>
     bcrypt.hashAsync(user.password, salt, null).then((hash) => {
-      user.password = hash;
+      user.password = hash
     })
-  );
+  )
 }
 /* eslint-enable no-param-reassign */
 
@@ -22,55 +22,55 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: true
-      }
+        isEmail: true,
+      },
     },
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     name: {
       type: DataTypes.STRING,
-      defaultValue: ''
+      defaultValue: '',
     },
     gender: {
       type: DataTypes.STRING,
-      defaultValue: ''
+      defaultValue: '',
     },
     location: {
       type: DataTypes.STRING,
-      defaultValue: ''
+      defaultValue: '',
     },
     website: {
       type: DataTypes.STRING,
-      defaultValue: ''
+      defaultValue: '',
     },
     picture: {
       type: DataTypes.STRING,
-      defaultValue: ''
+      defaultValue: '',
     },
     resetPasswordToken: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     resetPasswordExpires: {
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
     },
     google: {
-      type: DataTypes.STRING
-    }
+      type: DataTypes.STRING,
+    },
   }, {
     timestamps: false,
 
     classMethods: {
       associate(models) {
         User.hasMany(models.Token, {
-          foreignKey: 'userId'
-        });
-      }
+          foreignKey: 'userId',
+        })
+      },
     },
 
     instanceMethods: {
       comparePassword(candidatePassword) {
-        return bcrypt.compareAsync(candidatePassword, this.password);
+        return bcrypt.compareAsync(candidatePassword, this.password)
       },
 
       toJSON() {
@@ -82,15 +82,15 @@ export default (sequelize, DataTypes) => {
             gender: this.gender,
             location: this.location,
             website: this.website,
-            picture: this.picture
-          }
-        };
-      }
-    }
-  });
+            picture: this.picture,
+          },
+        }
+      },
+    },
+  })
 
-  User.beforeCreate(hashPassword);
-  User.beforeUpdate(hashPassword);
+  User.beforeCreate(hashPassword)
+  User.beforeUpdate(hashPassword)
 
-  return User;
-};
+  return User
+}

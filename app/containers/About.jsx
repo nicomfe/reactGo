@@ -1,8 +1,8 @@
-import React from 'react';
-import classNames from 'classnames/bind';
-import styles from 'css/components/about';
+import React from 'react'
+import classNames from 'classnames/bind'
+import styles from '../css/components/about.css'
 
-const cx = classNames.bind(styles);
+const cx = classNames.bind(styles)
 
 /*
  * Note: This is kept as a container-level component,
@@ -27,7 +27,7 @@ const About = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About
