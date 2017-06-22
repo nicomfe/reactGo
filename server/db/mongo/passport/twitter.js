@@ -13,7 +13,7 @@ export default (req, accessToken, refreshToken, profile, done) => {
         user.twitter = profile.id
         user.tokens.push({ kind: 'twitter', accessToken })
         user.profile.name = user.profile.name || profile.username
-        user.profile.picture = user.profile.picture || profile._json.profile_background_image_url
+        user.profile.picture = user.profile.picture || profile._json.profile_image_url
         user.save((err) => {
           done(err, user, { message: 'Twitter account has been linked.' })
         })
@@ -21,14 +21,16 @@ export default (req, accessToken, refreshToken, profile, done) => {
     })
   }
   return User.findOne({ twitter: profile.id }, (findByTwitterIdErr, existingUser) => {
-    if (existingUser) return done(null, existingUser)
+    if (existingUser) {
+      return done(null, existingUser)
+    }
 
     const user = new User()
     user.username = profile.username
     user.twitter = profile.id
     user.tokens.push({ kind: 'twitter', accessToken })
     user.profile.name = profile.displayName
-    user.profile.picture = profile._json.profile_background_image_url
+    user.profile.picture = profile._json.profile_image_url
     return user.save((err) => {
       done(err, user)
     })

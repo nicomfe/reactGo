@@ -12,9 +12,11 @@ import fetchDataForRoute from '../../app/utils/fetchDataForRoute'
  */
 export default function render(req, res) {
   const authenticated = req.isAuthenticated()
+  const _user = req.user
   const history = createMemoryHistory()
   const store = configureStore({
     user: {
+      json: _user,
       authenticated,
       isWaiting: false,
       message: '',

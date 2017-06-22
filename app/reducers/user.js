@@ -77,6 +77,7 @@ const userReducer = combineReducers({
   isWaiting,
   authenticated,
   message,
+  json: (state = {}) => state,
 })
 
 export default userReducer

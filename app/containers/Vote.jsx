@@ -47,13 +47,13 @@ const mapStateToProps = state => ({
   newTopic: state.topic.newTopic,
 })
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = {
   createTopic: topicActions.createTopic,
   typing: topicActions.typing,
   incrementCount: topicActions.incrementCount,
   decrementCount: topicActions.decrementCount,
   destroyTopic: topicActions.destroyTopic,
-})
+}
 // Read more about where to place `connect` here:
 // https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
 export default connect(mapStateToProps, mapDispatchToProps)(Vote)

@@ -44,12 +44,10 @@ function createTopicDuplicate() {
   }
 }
 
-export function typing(text) {
-  return {
-    type: types.TYPING,
-    newTopic: text,
-  }
-}
+export const typing = text => ({
+  type: types.TYPING,
+  newTopic: text,
+})
 
 // This action creator returns a function,
 // which will get executed by Redux-Thunk middleware
