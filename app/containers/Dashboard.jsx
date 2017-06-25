@@ -2,7 +2,6 @@ import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 
-import Avatar from '../components/Avatar'
 /*
  * Note: This is kept as a container-level component,
  *  i.e. We should keep this as the container that does the data-fetching
@@ -10,7 +9,7 @@ import Avatar from '../components/Avatar'
  */
 const Dashboard = ({ user }) => {
   if (!user) return null
-  return <div><Avatar image={user.getIn(['json', 'profile', 'picture'])} /></div>
+  return <div>Dashboard</div>
 }
 
 Dashboard.propTypes = {
