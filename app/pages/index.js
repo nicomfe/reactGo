@@ -1,5 +1,5 @@
 export App from './App'
-export Vote from './Vote'
 export Dashboard from './Dashboard'
 export LoginOrRegister from './LoginOrRegister'
 export About from './About'
+export Home from './Home'

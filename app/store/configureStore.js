@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import Immutable from 'immutable'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
@@ -17,13 +18,20 @@ export default function configureStore(initialState, history) {
   let store
 
   if (isClient && isDebug) {
-    middleware.push(createLogger())
-    store = createStore(rootReducer, initialState, compose(
+    middleware.push(createLogger({
+      stateTransformer: (state) => {
+        return state.toJS()
+      },
+      collapsed: () => {
+        return true
+      },
+    }))
+    store = createStore(rootReducer, Immutable.fromJS(initialState), compose(
       applyMiddleware(...middleware),
       typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
     ))
   } else {
-    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), f => f))
+    store = createStore(rootReducer, Immutable.fromJS(initialState), compose(applyMiddleware(...middleware), f => f))
   }
 
   if (module.hot) {

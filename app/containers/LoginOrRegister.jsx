@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames/bind'
@@ -18,11 +19,11 @@ class LoginOrRegister extends Component {
   handleOnSubmit(event) {
     event.preventDefault()
 
-    const { manualLogin, signUp, user: { isLogin } } = this.props
+    const { manualLogin, signUp, user } = this.props
     const email = ReactDOM.findDOMNode(this.refs.email).value
     const password = ReactDOM.findDOMNode(this.refs.password).value
 
-    if (isLogin) {
+    if (user.get('isLogin')) {
       manualLogin({ email, password })
     } else {
       signUp({ email, password })
@@ -30,8 +31,8 @@ class LoginOrRegister extends Component {
   }
 
   renderHeader() {
-    const { user: { isLogin }, toggleLoginMode } = this.props
-    if (isLogin) {
+    const { user, toggleLoginMode } = this.props
+    if (user.get('isLogin')) {
       return (
         <div className={cx('header')}>
           <h1 className={cx('heading')}>Login with Email</h1>
@@ -55,12 +56,12 @@ class LoginOrRegister extends Component {
   }
 
   render() {
-    const { isWaiting, message, isLogin } = this.props.user
+    const { user } = this.props
 
     return (
       <div
         className={cx('login', {
-          waiting: isWaiting
+          waiting: user.get('isWaiting'),
         })}
       >
         <div className={cx('container')}>
@@ -84,11 +85,13 @@ class LoginOrRegister extends Component {
                 <div>Hint</div>
                 <div>email: example@ninja.com password: ninja</div>
               </div>
-              <p className={cx('message', { 'message-show': message && message.length > 0 })}>{message}</p>
+              <p className={cx('message', { 'message-show': user.get('message') && user.get('message').count() > 0 })}>
+                {user.get('message')}
+              </p>
               <input
                 className={cx('button')}
                 type="submit"
-                value={isLogin ? 'Login' : 'Register'}
+                value={user.get('isLogin') ? 'Login' : 'Register'}
               />
             </form>
           </div>
@@ -107,7 +110,7 @@ class LoginOrRegister extends Component {
 }
 
 LoginOrRegister.propTypes = {
-  user: PropTypes.object,
+  user: ImmutablePropTypes.map,
   manualLogin: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
   toggleLoginMode: PropTypes.func.isRequired,
@@ -115,7 +118,9 @@ LoginOrRegister.propTypes = {
 
 // Function passed in to `connect` to subscribe to Redux store updates.
 // Any time it updates, mapStateToProps is called.
-const mapStateToProps = ({ user }) => ({ user })
+const mapStateToProps = state => ({
+  user: state.get('user'),
+})
 
 const mapDispatchToProps = () => ({
   manualLogin: userActions.manualLogin,

@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 
 import Avatar from '../components/Avatar'
@@ -9,12 +9,16 @@ import Avatar from '../components/Avatar'
  *  and dispatching of actions if you decide to have any sub-components.
  */
 const Dashboard = ({ user }) => {
-  return <div><Avatar image={user.json.profile.picture} /></div>
+  if (!user) return null
+  return <div><Avatar image={user.getIn(['json', 'profile', 'picture'])} /></div>
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.object,
+  user: ImmutablePropTypes.map,
 }
-const mapStateToProps = ({ user }) => ({ user })
+
+const mapStateToProps = state => ({
+  user: state.get('user'),
+})
 
 export default connect(mapStateToProps)(Dashboard)
