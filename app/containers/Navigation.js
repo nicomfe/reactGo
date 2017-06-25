@@ -32,7 +32,7 @@ const Navigation = ({ user, logOut }) => {
         <Link className={cx('item')} to="/login">Log in</Link>
       )}
 
-      <Avatar image={user.getIn(['json', 'profile', 'picture'])} />
+      {user.get('authenticated') ? (<Avatar image={user.getIn(['json', 'profile', 'picture'])} />) : null}
     </nav>
   )
 }
