@@ -19,6 +19,9 @@ body {
   font-smoothing: antialiased;
 }
 
+.bodyContent {
+  padding: 15px 0;
+}
 
 /* Add your global styles below... */
 

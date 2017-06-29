@@ -22,7 +22,9 @@ const App = ({ children }) => {
     <div className={cx('app')}>
       <Navigation />
       <Message />
-      {children}
+      <div className={cx('bodyContent')}>
+        {children}
+      </div>
     </div>
   )
 }
