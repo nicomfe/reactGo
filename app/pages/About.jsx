@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Page from '../pages/Page'
-import AboutContainer from '../containers/About'
 
 class About extends Component {
   getMetaData() {
@@ -28,7 +27,7 @@ class About extends Component {
   render() {
     return (
       <Page {...this.getMetaData()}>
-        <AboutContainer {...this.props} />
+        About page
       </Page>
     )
   }
