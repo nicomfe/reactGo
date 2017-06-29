@@ -3,12 +3,17 @@ import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { RouterContext } from 'react-router'
 import Helmet from 'react-helmet'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 import staticAssets from './static-assets'
+import getMuiTheme from '../../app/theme/materialUITheme'
 
 const createApp = (store, props) => renderToString(
-  <Provider store={store}>
-    <RouterContext {...props} />
-  </Provider>
+  <MuiThemeProvider muiTheme={getMuiTheme}>
+    <Provider store={store}>
+      <RouterContext {...props} />
+    </Provider>
+  </MuiThemeProvider>
 )
 
 const buildPage = ({ componentHTML, initialState, headAssets }) => {
