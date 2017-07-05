@@ -10,6 +10,7 @@
     "Action": false,
     "DEVELOPMENT": false,
     "PRODUCTION": false,
+    "__PRODUCTION__": false,
     "__DEBUG__": false,
     "sinon": false,
     "expect": false,
