@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
  */
 const Dashboard = ({ user }) => {
   if (!user) return null
-  return <div>Dashboard</div>
+  return <div>Welecome {user.getIn(['json', 'profile', 'name'])}</div>
 }
 
 Dashboard.propTypes = {

@@ -52,4 +52,8 @@ const mapStateToProps = state => ({
   user: state.get('user'),
 })
 
-export default connect(mapStateToProps, { logOut: userActions.logOut })(Navigation)
+const mapDispatchToProps = dispatch => ({
+  logOut: () => dispatch(userActions.logOut()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation)
