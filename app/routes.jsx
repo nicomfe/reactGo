@@ -1,7 +1,6 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import { fetchVoteData } from './fetch-data';
-import { App, Vote, Dashboard, About, LoginOrRegister } from './pages';
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+import { App, Dashboard, About, LoginOrRegister, Home } from './pages'
 
 /*
  * @param {Redux Store}
@@ -10,31 +9,31 @@ import { App, Vote, Dashboard, About, LoginOrRegister } from './pages';
  */
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
-    const { user: { authenticated }} = store.getState();
-    if (!authenticated) {
+    const state = store.getState()
+    if (!state.getIn(['user', 'authenticated'])) {
       replace({
         pathname: '/login',
-        state: { nextPathname: nextState.location.pathname }
-      });
+        state: { nextPathname: nextState.location.pathname },
+      })
     }
-    callback();
-  };
+    callback()
+  }
 
   const redirectAuth = (nextState, replace, callback) => {
-    const { user: { authenticated }} = store.getState();
-    if (authenticated) {
+    const state = store.getState()
+    if (state.getIn(['user', 'authenticated'])) {
       replace({
-        pathname: '/'
-      });
+        pathname: '/',
+      })
     }
-    callback();
-  };
+    callback()
+  }
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Vote} fetchData={fetchVoteData} />
+      <IndexRoute component={Home} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />
     </Route>
-  );
-};
+  )
+}

@@ -4,19 +4,19 @@ module.exports = {
       'session', {
         sid: {
           type: DataTypes.STRING,
-          primaryKey: true
+          primaryKey: true,
         },
         sess: {
-          type: DataTypes.JSON
+          type: DataTypes.JSON,
         },
         expire: {
-          type: DataTypes.DATE
-        }
-      }
-    );
+          type: DataTypes.DATE,
+        },
+      },
+    )
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('session');
-  }
-};
+    return queryInterface.dropTable('session')
+  },
+}

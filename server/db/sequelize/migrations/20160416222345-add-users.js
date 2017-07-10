@@ -5,41 +5,41 @@ module.exports = {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true
+          autoIncrement: true,
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
         },
         password: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING,
         },
         name: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
         },
         gender: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
         },
         location: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
         },
         website: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
         },
         picture: {
           type: DataTypes.STRING,
-          defaultValue: ''
+          defaultValue: '',
         },
         resetPasswordToken: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING,
         },
         resetPasswordExpires: {
-          type: DataTypes.DATE
-        }
+          type: DataTypes.DATE,
+        },
       }
     ).then(() =>
       queryInterface.addIndex(
@@ -47,13 +47,13 @@ module.exports = {
         [DataTypes.fn('lower', DataTypes.col('email'))],
         {
           indexName: 'users_email',
-          indicesType: 'unique'
+          indicesType: 'unique',
         }
       )
-    );
+    )
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Users');
-  }
-};
+    return queryInterface.dropTable('Users')
+  },
+}

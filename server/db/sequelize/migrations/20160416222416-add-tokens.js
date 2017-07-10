@@ -5,28 +5,28 @@ module.exports = {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true
+          autoIncrement: true,
         },
         kind: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
         },
         accessToken: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
         },
         userId: {
           type: DataTypes.INTEGER,
           references: {
             model: 'Users',
-            key: 'id'
-          }
-        }
+            key: 'id',
+          },
+        },
       }
-    );
+    )
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Tokens');
-  }
-};
+    return queryInterface.dropTable('Tokens')
+  },
+}

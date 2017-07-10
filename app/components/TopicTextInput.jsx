@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-const ENTER_KEY_CODE = 13;
+const ENTER_KEY_CODE = 13
 
 export default class TopicTextInput extends Component {
   constructor(props) {
-    super(props);
-    this.onSave = this.onSave.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
+    super(props)
+    this.onSave = this.onSave.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.onKeyDown = this.onKeyDown.bind(this)
   }
   /*
    * Invokes the callback passed in as onSave, allowing this component to be
    * used in different ways. I personally think this makes it more reusable.
    */
   onSave() {
-    const { onEntrySave, value } = this.props;
-    onEntrySave(value);
+    const { onEntrySave, value } = this.props
+    onEntrySave(value)
   }
 
   /*
@@ -24,8 +24,8 @@ export default class TopicTextInput extends Component {
    * used in different ways. I personally think this makes it more reusable.
    */
   onChange(event) {
-    const { onEntryChange } = this.props;
-    onEntryChange(event.target.value);
+    const { onEntryChange } = this.props
+    onEntryChange(event.target.value)
   }
 
   /*
@@ -33,12 +33,12 @@ export default class TopicTextInput extends Component {
    */
   onKeyDown(event) {
     if (event.keyCode === ENTER_KEY_CODE) {
-      this.onSave();
+      this.onSave()
     }
   }
 
   render() {
-    const { className, placeholder, value } = this.props;
+    const { className, placeholder, value } = this.props
     return (
       <input
         className={className}
@@ -46,8 +46,9 @@ export default class TopicTextInput extends Component {
         onChange={this.onChange}
         onKeyDown={this.onKeyDown}
         value={value}
-        autoFocus />
-    );
+        autoFocus
+      />
+    )
   }
 }
 
@@ -56,5 +57,5 @@ TopicTextInput.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onEntrySave: PropTypes.func,
-  onEntryChange: PropTypes.func
-};
+  onEntryChange: PropTypes.func,
+}

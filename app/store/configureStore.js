@@ -1,9 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
-import thunk from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import rootReducer from '../reducers';
-import { isClient, isDebug } from '../../config/app';
+import { createStore, applyMiddleware, compose } from 'redux'
+import Immutable from 'immutable'
+import { routerMiddleware } from 'react-router-redux'
+import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+
+import fetchMiddleware from '../utils/reduxMiddleware'
+import rootReducer from '../reducers'
+import { isClient, isDebug } from '../../config/app'
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering
@@ -13,27 +16,34 @@ import { isClient, isDebug } from '../../config/app';
  */
 export default function configureStore(initialState, history) {
   // Installs hooks that always keep react-router and redux store in sync
-  const middleware = [thunk, routerMiddleware(history)];
-  let store;
+  const middleware = [thunk, fetchMiddleware, routerMiddleware(history)]
+  let store
 
   if (isClient && isDebug) {
-    middleware.push(createLogger());
-    store = createStore(rootReducer, initialState, compose(
+    middleware.push(createLogger({
+      stateTransformer: (state) => {
+        return state.toJS()
+      },
+      collapsed: () => {
+        return true
+      },
+    }))
+    store = createStore(rootReducer, Immutable.fromJS(initialState), compose(
       applyMiddleware(...middleware),
       typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
-    ));
+    ))
   } else {
-    store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), f => f));
+    store = createStore(rootReducer, Immutable.fromJS(initialState), compose(applyMiddleware(...middleware), f => f))
   }
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('reducers', () => {
-      const nextReducer = require('../reducers');
+      const nextReducer = require('../reducers')
 
-      store.replaceReducer(nextReducer);
-    });
+      store.replaceReducer(nextReducer)
+    })
   }
 
-  return store;
+  return store
 }

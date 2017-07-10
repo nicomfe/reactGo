@@ -1,12 +1,12 @@
-import PassportTwitter from 'passport-twitter';
-import { twitter } from '../../../config/secrets';
-import unsupportedMessage from '../../db/unsupportedMessage';
-import { passport as dbPassport } from '../../db';
+import PassportTwitter from 'passport-twitter'
+import { twitter } from '../../../config/secrets'
+import unsupportedMessage from '../../db/unsupportedMessage'
+import { passport as dbPassport } from '../../db'
 
 export default (passport) => {
   if (!dbPassport || !dbPassport.twitter || !typeof dbPassport.twitter === 'function') {
-    console.warn(unsupportedMessage('passport-twitter'));
-    return;
+    console.warn(unsupportedMessage('passport-twitter'))
+    return
   }
 
   /*
@@ -28,5 +28,5 @@ export default (passport) => {
     consumerKey: twitter.clientID,
     consumerSecret: twitter.clientSecret,
     callbackURL: twitter.callbackURL,
-  }, dbPassport.twitter));
-};
+  }, dbPassport.twitter))
+}

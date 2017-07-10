@@ -2,30 +2,30 @@ export default (sequelize, DataTypes) => {
   const Token = sequelize.define('Token', {
     kind: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     accessToken: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users',
-        key: 'id'
-      }
-    }
+        key: 'id',
+      },
+    },
   }, {
     timestamps: false,
 
     classMethods: {
       associate(models) {
         Token.belongsTo(models.User, {
-          foreignKey: 'userId'
-        });
-      }
-    }
-  });
+          foreignKey: 'userId',
+        })
+      },
+    },
+  })
 
-  return Token;
-};
+  return Token
+}

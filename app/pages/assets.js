@@ -1,10 +1,10 @@
 /* Based on the template in Web Starter Kit :
 https://github.com/google/web-starter-kit/blob/master/app/index.html
 */
-import chromeFavicon from '../images/chrome-ninja192-precomposed.png';
-import appleFavicon from '../images/apple-ninja152-precomposed.png';
-import msFavicon from '../images/ms-ninja144-precomposed.png';
-import favicon from '../images/favicon.png';
+import chromeFavicon from '../images/chrome-ninja192-precomposed.png'
+import appleFavicon from '../images/apple-ninja152-precomposed.png'
+import msFavicon from '../images/ms-ninja144-precomposed.png'
+import favicon from '../images/favicon.png'
 
 const metaAssets = () => {
   return [
@@ -33,9 +33,9 @@ const metaAssets = () => {
     { name: 'apple-mobile-web-app-title', content: 'reactGo' },
     // Tile icon for Win8 (144x144 + tile color)
     { name: 'msapplication-TileImage', content: msFavicon },
-    { name: 'msapplication-TileColor', content: '#3372DF' }
-  ];
-};
+    { name: 'msapplication-TileColor', content: '#3372DF' },
+  ]
+}
 
 const linkAssets = () => {
   const links = [
@@ -43,15 +43,15 @@ const linkAssets = () => {
     { rel: 'icon', href: favicon },
     { rel: 'icon', sizes: '192x192', href: chromeFavicon },
     // Add to homescreen for Safari on IOS
-    { rel: 'apple-touch-icon', sizes: '152x152', href: appleFavicon }
+    { rel: 'apple-touch-icon', sizes: '152x152', href: appleFavicon },
     // SEO: If your mobile URL is different from the desktop URL,
     // add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones
     // { 'rel': 'canonical', 'href': 'http://www.example.com/' }
-  ];
+  ]
 
-  return links;
-};
+  return links
+}
 
-export const title = 'reactGo - just ship it';
-export const meta = metaAssets();
-export const link = linkAssets();
+export const title = 'reactGo - just ship it'
+export const meta = metaAssets()
+export const link = linkAssets()

@@ -3,13 +3,16 @@
 
 .navigation {
   padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .item {
   display: inline-block;
   text-decoration: none;
   padding: 16px 32px;
-  color: var(--colorBlack);
+  color: white;
 }
 
 .logo {
@@ -18,4 +21,8 @@
 
 .active {
   color: var(--colorDodgerBlue);
+}
+
+.displayFlex {
+  display: flex;
 }

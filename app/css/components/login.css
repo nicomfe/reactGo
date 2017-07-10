@@ -14,8 +14,11 @@
 
 .waiting {
   .loading {
-    display: block;
+    display: block !important;
   }
+}
+.loading {
+  display: none !important;
 }
 
 .alternative {
@@ -29,12 +32,6 @@
   color: var(--colorDodgerBlue);
   font-weight: bold;
   cursor: pointer;
-}
-
-.loading {
-  display: none;
-  text-align: center;
-  margin: 24px auto;
 }
 
 .email-container {
