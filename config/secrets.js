@@ -9,4 +9,6 @@ export const twitter = {
   clientID: process.env.TWITTER_KEY,
   clientSecret: process.env.TWITTER_SECRET,
   callbackURL: '/auth/twitter/callback',
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 }

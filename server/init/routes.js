@@ -1,12 +1,23 @@
 /**
  * Routes for express app
  */
+// import Twitter from 'twitter'
 import passport from 'passport'
 import unsupportedMessage from '../db/unsupportedMessage'
 import { controllers, passport as passportConfig } from '../db'
+import * as messagesApi from '../api/messages'
+// import { twitter as twitterConfig } from '../../config/secrets'
+
 
 const usersController = controllers && controllers.users
 const topicsController = controllers && controllers.topics
+
+// const TwitterClient = new Twitter({
+//   consumer_key: twitterConfig.clientID,
+//   consumer_secret: twitterConfig.clientSecret,
+//   access_token_key: twitterConfig.accessToken,
+//   access_token_secret: twitterConfig.accessTokenSecret,
+// })
 
 export default (app) => {
   // user routes
@@ -69,5 +80,14 @@ export default (app) => {
     app.delete('/topic/:id', topicsController.remove)
   } else {
     console.warn(unsupportedMessage('topics routes'))
+  }
+
+  // API HOST: https://api.twitter.com/1.1/direct_messages/events/list.json
+  // DOCS:  https://dev.twitter.com/rest/reference/get/direct_messages/events/list
+
+  if (messagesApi) {
+    app.get('/api/twitter/messages', messagesApi.all)
+    app.get('/api/twitter/messages/received', messagesApi.getReceived)
+    app.get('/api/twitter/messages/sent', messagesApi.getSent)
   }
 }
